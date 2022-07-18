@@ -1,6 +1,6 @@
-const API = 'https://youtube-v31.p.rapidapi.com/search?channelId=UCeO8Z33V7Gq87f5v184VQWA&part=snippet%2Cid&order=date&maxResults=4';
+const API = 'https://youtube-v31.p.rapidapi.com/search?channelId=UCeO8Z33V7Gq87f5v184VQWA&part=snippet%2Cid&order=date&maxResults=4'; // Declaramos la URL de la API
 
-const content = null || document.getElementById('content');
+const content = null || document.getElementById('content'); // Mandamos llamar el id de un elemento HTML y lo declaramos en una variable
 
 const options = {
 	method: 'GET',
@@ -10,13 +10,13 @@ const options = {
 	}
 };
 
-const fetchData = async (urlApi) => {
+const fetchData = async (urlApi) => {   // Declaramos la funcion de fetch usando el asincrinismo
     const response = await fetch(urlApi, options);
     const data = await response.json();
     return data;
 };
 
-(async () => {
+(async () => {      // Declaramos una funcion autoejecutable
     try {
         const videos = await fetchData(API);
         let view = `
@@ -24,7 +24,7 @@ const fetchData = async (urlApi) => {
             <div class="group relative">
             <div
             class="w-full bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:aspect-none">
-            <img src="${video.snippet.thumbnail.high.url}" alt="${video.snippet.description}" class="w-full">
+            <img src="${video.snippet.thumbnails.high.url}" alt="${video.snippet.description}" class="w-full">
             </div>
             <div class="mt-4 flex justify-between">
             <h3 class="text-sm text-gray-700">
@@ -35,7 +35,8 @@ const fetchData = async (urlApi) => {
         </div>`
         ).slice(0,4).join('')}`;
 
-    } catch {
-
+        content.innerHTML = view;
+    } catch (error) { 
+        console.log(error);
     }
 })();
